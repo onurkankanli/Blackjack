@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Clion Projects/Second Year/Quarter_2/Advanced_Programming_Concepts/Blackjack/src/mainwindow.cpp
+mainwindow.h
+C:/Clion Projects/Second Year/Quarter_2/Advanced_Programming_Concepts/Blackjack/src/mainwindow.h
+ui_mainwindow.h
+C:/Clion Projects/Second Year/Quarter_2/Advanced_Programming_Concepts/Blackjack/src/ui_mainwindow.h
+playwindow.h
+C:/Clion Projects/Second Year/Quarter_2/Advanced_Programming_Concepts/Blackjack/src/playwindow.h
+
+C:/Clion Projects/Second Year/Quarter_2/Advanced_Programming_Concepts/Blackjack/src/mainwindow.h
+
+C:/Clion Projects/Second Year/Quarter_2/Advanced_Programming_Concepts/Blackjack/src/playwindow.cpp
+playwindow.h
+C:/Clion Projects/Second Year/Quarter_2/Advanced_Programming_Concepts/Blackjack/src/playwindow.h
+
+C:/Clion Projects/Second Year/Quarter_2/Advanced_Programming_Concepts/Blackjack/src/playwindow.h
+
