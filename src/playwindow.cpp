@@ -1,7 +1,3 @@
-//
-// Created by onurk on 12/7/2021.
-//
-
 #include "playwindow.h"
 #include "ui_playwindow.h"
 #include <iostream>
@@ -13,8 +9,8 @@
 
 
 PlayWindow::PlayWindow(QWidget *parent) :
-        QMainWindow(parent),
-        ui(new Ui::PlayWindow)
+    QMainWindow(parent),
+    ui(new Ui::PlayWindow)
 {
     ui->setupUi(this);
     QPixmap pix(":/images/images/blackjack_table.png");
@@ -24,17 +20,15 @@ PlayWindow::PlayWindow(QWidget *parent) :
     this->statusBar()->setSizeGripEnabled(false);
     this->setFixedSize(800,500);
 
-
     loadList();
 }
 
-
-static int player_score = 0;
-static int computer_score = 0;
-int computer_wins = 0;
+static int score_of_player = 0;
+static int score_of_cpu = 0;
+int cpu_wins = 0;
 int player_wins = 0;
-int holdingCardCount = 1;
-int holdingCardCountComputer = 1;
+int CurrentCount = 1;
+int CurrentCountComputer = 1;
 
 void PlayWindow::loadList(){
 
@@ -174,62 +168,62 @@ PlayWindow::~PlayWindow()
 
 void PlayWindow::on_twistButton_clicked()
 {
-    int deckValues[52] = {1,2,3,4,5,6,7,8,9,10,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,10};
+    int Values_of_deck[52] = {1,2,3,4,5,6,7,8,9,10,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,10};
 
     int number = rand() % 52;
-    ui->playercurrentLabel->setText("Current Card: " + QString::number(deckValues[number-1]));
-    player_score += deckValues[number-1];
-    ui->playertotalLabel->setText("Total: " + QString::number(player_score));
+    ui->playercurrentLabel->setText("Current Card: " + QString::number(Values_of_deck[number-1]));
+    score_of_player += Values_of_deck[number-1];
+    ui->playertotalLabel->setText("Total: " + QString::number(score_of_player));
 
     // Which position should the Card be drawn.
-    switch(holdingCardCount){
-        case 1:
-            ui->card1Label->setPixmap(cardHolder.at(number - 1));
-            break;
-        case 2:
-            ui->card2Label->setPixmap(cardHolder.at(number - 1));
-            break;
-        case 3:
-            ui->card3Label->setPixmap(cardHolder.at(number - 1));
-            break;
-        case 4:
-            ui->card4Label->setPixmap(cardHolder.at(number - 1));
-            break;
-        case 5:
-            ui->card5Label->setPixmap(cardHolder.at(number - 1));
-            break;
-        case 6:
-            ui->card6Label->setPixmap(cardHolder.at(number - 1));
-            break;
-        case 7:
-            ui->card7Label->setPixmap(cardHolder.at(number - 1));
-            break;
-        case 8:
-            ui->card8Label->setPixmap(cardHolder.at(number - 1));
-            break;
-        case 9:
-            ui->card9Label->setPixmap(cardHolder.at(number - 1));
-            break;
-        case 10:
-            ui->card10Label->setPixmap(cardHolder.at(number - 1));
-            break;
+    switch(CurrentCount){
+    case 1:
+        ui->card1Label->setPixmap(cardHolder.at(number - 1));
+        break;
+    case 2:
+        ui->card2Label->setPixmap(cardHolder.at(number - 1));
+        break;
+    case 3:
+        ui->card3Label->setPixmap(cardHolder.at(number - 1));
+        break;
+    case 4:
+        ui->card4Label->setPixmap(cardHolder.at(number - 1));
+        break;
+    case 5:
+        ui->card5Label->setPixmap(cardHolder.at(number - 1));
+        break;
+    case 6:
+        ui->card6Label->setPixmap(cardHolder.at(number - 1));
+        break;
+    case 7:
+        ui->card7Label->setPixmap(cardHolder.at(number - 1));
+        break;
+    case 8:
+        ui->card8Label->setPixmap(cardHolder.at(number - 1));
+        break;
+    case 9:
+        ui->card9Label->setPixmap(cardHolder.at(number - 1));
+        break;
+    case 10:
+        ui->card10Label->setPixmap(cardHolder.at(number - 1));
+        break;
 
     }
     // increment Card Count for position
-    ++holdingCardCount;
+    ++CurrentCount;
 
     QPixmap win(":/images/images/win.png");
     QPixmap lose(":/images/images/lose.png");
     QPixmap draw(":/images/images/draw.png");
     // if player bust
-    if (player_score > 21){
+    if (score_of_player > 21){
         ui->statusLabel->setText("Bust!");
         ui->twistButton->setEnabled(false);
 
         //Generating Computer score
         computerTurn();
     }
-    if (player_score > 15 && player_score < 22){
+    if (score_of_player > 15 && score_of_player < 22){
         ui->stickButton->setEnabled(true);
     }
     else {
@@ -258,10 +252,10 @@ void PlayWindow::on_stickButton_clicked()
 void PlayWindow::on_playagainButton_clicked()
 {
     //Clear Labels and Variables
-    player_score = 0;
-    computer_score = 0;
-    holdingCardCount = 1;
-    holdingCardCountComputer = 1;
+    score_of_player = 0;
+    score_of_cpu = 0;
+    CurrentCount = 1;
+    CurrentCountComputer = 1;
 
     ui->playercurrentLabel->setText("Card: " + QString::number(0));
     ui->playertotalLabel->setText("Total: " + QString::number(0));
@@ -308,70 +302,67 @@ void PlayWindow::computerTurn(){
     QPixmap lose(":/images/images/lose.png");
     QPixmap draw(":/images/images/draw.png");
 
-    int computer_score = 0;
-    while (computer_score < 16){
-        computer_score += rand() % 10 + 1;
+    int score_of_cpu = 0;
+    while (score_of_cpu < 16){
+        score_of_cpu += rand() % 10 + 1;
 
-        ui->computerScoreLabel->setText("Computer: " + QString::number(computer_score));
+        ui->computerScoreLabel->setText("Computer: " + QString::number(score_of_cpu));
 
-        switch(holdingCardCountComputer){
-            case 1:
-                ui->card10Label_2->setPixmap(cardHolder.at(computer_score - 1));
-                break;
-            case 2:
-                ui->card9Label_2->setPixmap(cardHolder.at(computer_score - 1));
-                break;
-            case 3:
-                ui->card8Label_2->setPixmap(cardHolder.at(computer_score - 1));
-                break;
-            case 4:
-                ui->card7Label_2->setPixmap(cardHolder.at(computer_score - 1));
-                break;
-            case 5:
-                ui->card6Label_2->setPixmap(cardHolder.at(computer_score - 1));
-                break;
-            case 6:
-                ui->card5Label_2->setPixmap(cardHolder.at(computer_score - 1));
-                break;
-            case 7:
-                ui->card4Label_2->setPixmap(cardHolder.at(computer_score - 1));
-                break;
-            case 8:
-                ui->card3Label_2->setPixmap(cardHolder.at(computer_score - 1));
-                break;
-            case 9:
-                ui->card2Label_2->setPixmap(cardHolder.at(computer_score - 1));
-                break;
-            case 10:
-                ui->card1Label_2->setPixmap(cardHolder.at(computer_score - 1));
-                break;
-        }
-        ++holdingCardCountComputer;
+            switch(CurrentCountComputer){
+                case 1:
+                    ui->card10Label_2->setPixmap(cardHolder.at(score_of_cpu - 1));
+                    break;
+                case 2:
+                    ui->card9Label_2->setPixmap(cardHolder.at(score_of_cpu - 1));
+                    break;
+                case 3:
+                    ui->card8Label_2->setPixmap(cardHolder.at(score_of_cpu - 1));
+                    break;
+                case 4:
+                    ui->card7Label_2->setPixmap(cardHolder.at(score_of_cpu - 1));
+                    break;
+                case 5:
+                    ui->card6Label_2->setPixmap(cardHolder.at(score_of_cpu - 1));
+                    break;
+                case 6:
+                    ui->card5Label_2->setPixmap(cardHolder.at(score_of_cpu - 1));
+                    break;
+                case 7:
+                    ui->card4Label_2->setPixmap(cardHolder.at(score_of_cpu - 1));
+                    break;
+                case 8:
+                    ui->card3Label_2->setPixmap(cardHolder.at(score_of_cpu - 1));
+                    break;
+                case 9:
+                    ui->card2Label_2->setPixmap(cardHolder.at(score_of_cpu - 1));
+                    break;
+                case 10:
+                    ui->card1Label_2->setPixmap(cardHolder.at(score_of_cpu - 1));
+                    break;
+            }
+            ++CurrentCountComputer;
     }
 
-
-
-
     //if computer is bust
-    if (computer_score > 21){
+    if (score_of_cpu > 21){
         ui->computerStatusLabel->setText("Bust!");
     } else{
         ui->computerStatusLabel->setText("Stick");
     }
     // if same score or both bust
-    if ((computer_score == player_score) || ((computer_score > 21) && (player_score > 21))){
+    if ((score_of_cpu == score_of_player) || ((score_of_cpu > 21) && (score_of_player > 21))){
         ui->outcomeLabel->setPixmap(draw);
     }
-        // if both players are not bust AND computer is larger than player
-    else if (((computer_score < 22) && (player_score < 22) && (computer_score > player_score)) || ((player_score > 21) && computer_score < 22 )){
+    // if both players are not bust AND computer is larger than player
+    else if (((score_of_cpu < 22) && (score_of_player < 22) && (score_of_cpu > score_of_player)) || ((score_of_player > 21) && score_of_cpu < 22 )){
         ui->outcomeLabel->setPixmap(lose);;
-        ++computer_wins;
+        ++cpu_wins;
     }
-        // else, player wins
+    // else, player wins
     else{
         ui->outcomeLabel->setPixmap(win);
         ++player_wins;
     }
-    ui->statusbar->showMessage("Player " + QString::number(player_wins) + " - Gamescore - " + "Computer " + QString::number(computer_wins));
+    ui->statusbar->showMessage("Player " + QString::number(player_wins) + " - Gamescore - " + "Computer " + QString::number(cpu_wins));
     this->setEnabled(true);
 }

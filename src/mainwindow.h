@@ -5,7 +5,7 @@
 #include "playwindow.h"
 
 namespace Ui {
-    class MainWindow;
+class MainWindow;
 }
 
 class MainWindow : public QMainWindow
@@ -19,11 +19,11 @@ public:
 
 
 private slots:
-            void on_closeButton_clicked();
+    void on_closeButton_clicked(); //Function for Close button
 
-    void on_playButton_clicked();
+    void on_playButton_clicked(); //Function for Play button
 
-    void on_actionQuit_triggered();
+    void on_actionQuit_triggered(); //Function that compiles after the Close button pressed
 
 
 private:

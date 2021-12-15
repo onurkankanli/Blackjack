@@ -1,14 +1,10 @@
-//
-// Created by onurk on 12/7/2021.
-//
-
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "playwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-        QMainWindow(parent),
-        ui(new Ui::MainWindow)
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     QPixmap pix(":/images/images/bg.jpg");
@@ -26,7 +22,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_closeButton_clicked()
 {
-    QApplication::quit();
+   QApplication::quit();
 }
 
 void MainWindow::on_playButton_clicked()

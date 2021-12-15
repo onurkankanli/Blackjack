@@ -1,14 +1,10 @@
-//
-// Created by onurk on 12/7/2021.
-//
-
 #ifndef PLAYWINDOW_H
 #define PLAYWINDOW_H
 #include <QDebug>
 #include <QMainWindow>
 
 namespace Ui {
-    class PlayWindow;
+class PlayWindow;
 }
 
 class PlayWindow : public QMainWindow
@@ -23,11 +19,11 @@ public:
 
 
 public slots:
-            void loadList();
+    void loadList();
 
     void computerTurn();
 private slots:
-            void on_twistButton_clicked();
+    void on_twistButton_clicked();
 
     void on_stickButton_clicked();
 
